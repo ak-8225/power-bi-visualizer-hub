@@ -2,6 +2,7 @@
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import DashboardGrid from '@/components/dashboard/DashboardGrid';
+import LeadsDashboard from '@/components/leads/LeadsDashboard';
 
 const DashboardLayout = () => {
   return (
@@ -19,12 +20,16 @@ const DashboardLayout = () => {
       <Tabs defaultValue="overview" className="space-y-4">
         <TabsList>
           <TabsTrigger value="overview">Overview</TabsTrigger>
+          <TabsTrigger value="leads">Lead Management</TabsTrigger>
           <TabsTrigger value="analytics">Analytics</TabsTrigger>
           <TabsTrigger value="reports">Reports</TabsTrigger>
           <TabsTrigger value="settings">Settings</TabsTrigger>
         </TabsList>
         <TabsContent value="overview" className="space-y-4">
           <DashboardGrid />
+        </TabsContent>
+        <TabsContent value="leads" className="space-y-4">
+          <LeadsDashboard />
         </TabsContent>
         <TabsContent value="analytics" className="h-[400px] flex items-center justify-center border rounded">
           <p className="text-muted-foreground">Analytics content coming soon</p>

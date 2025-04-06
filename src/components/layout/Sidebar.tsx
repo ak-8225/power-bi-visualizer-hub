@@ -3,7 +3,19 @@ import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { PanelLeftIcon, ChevronLeft, ChevronRight, LayoutDashboard, BarChart2, PieChart, LineChart, Settings, Home, HelpCircle } from 'lucide-react';
+import { 
+  PanelLeftIcon, 
+  ChevronLeft, 
+  ChevronRight, 
+  LayoutDashboard, 
+  BarChart2, 
+  PieChart, 
+  LineChart, 
+  Settings, 
+  Home, 
+  HelpCircle, 
+  Users 
+} from 'lucide-react';
 
 const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -15,6 +27,7 @@ const Sidebar = () => {
   const sidebarItems = [
     { name: 'Home', icon: Home, active: false },
     { name: 'Dashboards', icon: LayoutDashboard, active: true },
+    { name: 'Leads', icon: Users, active: false },
     { name: 'Reports', icon: BarChart2, active: false },
     { name: 'Analytics', icon: LineChart, active: false },
     { name: 'Data Sets', icon: PieChart, active: false },
