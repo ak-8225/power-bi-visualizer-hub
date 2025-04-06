@@ -3,6 +3,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import DashboardGrid from '@/components/dashboard/DashboardGrid';
 import LeadsDashboard from '@/components/leads/LeadsDashboard';
+import UserProfileDashboard from '@/components/leads/UserProfileDashboard';
 
 const DashboardLayout = () => {
   return (
@@ -17,9 +18,10 @@ const DashboardLayout = () => {
         </Badge>
       </div>
 
-      <Tabs defaultValue="overview" className="space-y-4">
+      <Tabs defaultValue="profile" className="space-y-4">
         <TabsList>
           <TabsTrigger value="overview">Overview</TabsTrigger>
+          <TabsTrigger value="profile">Profile Dashboard</TabsTrigger>
           <TabsTrigger value="leads">Lead Management</TabsTrigger>
           <TabsTrigger value="analytics">Analytics</TabsTrigger>
           <TabsTrigger value="reports">Reports</TabsTrigger>
@@ -27,6 +29,9 @@ const DashboardLayout = () => {
         </TabsList>
         <TabsContent value="overview" className="space-y-4">
           <DashboardGrid />
+        </TabsContent>
+        <TabsContent value="profile" className="space-y-4">
+          <UserProfileDashboard />
         </TabsContent>
         <TabsContent value="leads" className="space-y-4">
           <LeadsDashboard />

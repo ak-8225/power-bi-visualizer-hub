@@ -19,8 +19,10 @@ export interface Lead {
   industry?: string;
   company_size?: 'Small' | 'Medium' | 'Large';
   revenue?: number;
+  lead_score?: number;
 }
 
+// Extended mock data with lead scores
 export const leadsData: Lead[] = [
   {
     id: 'ab52b865-2398-4acb-abd5-9056e285ec4e',
@@ -36,9 +38,10 @@ export const leadsData: Lead[] = [
     value: 50000,
     created_at: '2025-04-03 18:59:10.402863',
     updated_at: '2025-04-03 18:59:10.402863',
-    notes: 'Interested in our enterprise solution. Needs proposals',
+    notes: 'Interested in our enterprise solution. Needs pricing details.',
     industry: 'Technology',
-    company_size: 'Medium'
+    company_size: 'Medium',
+    lead_score: 85
   },
   {
     id: '184c5636-20b2-47ae-9abe-017fa7d22edb',
@@ -54,9 +57,10 @@ export const leadsData: Lead[] = [
     value: 25000,
     created_at: '2025-04-03 18:59:10.402863',
     updated_at: '2025-04-03 18:59:10.402863',
-    notes: 'Referred by Mike Johnson. Looking for marketing solutions',
+    notes: 'Referred by Mike Johnson. Looking for marketing automation.',
     industry: 'Technology',
-    company_size: 'Small'
+    company_size: 'Small',
+    lead_score: 62
   },
   {
     id: '34bb2146-9d11-4809-b072-dbf2752e0490',
@@ -72,9 +76,10 @@ export const leadsData: Lead[] = [
     value: 100000,
     created_at: '2025-04-03 18:59:10.402863',
     updated_at: '2025-04-03 18:59:10.402863',
-    notes: 'Met at Tech Conference 2023. Very interested in our services',
+    notes: 'Met at Tech Conference 2023. Very interested in our AI solutions.',
     industry: 'Finance',
-    company_size: 'Large'
+    company_size: 'Large',
+    lead_score: 91
   },
   {
     id: '9a9ab569-44a8-4206-b366-20b510e65142',
@@ -92,7 +97,8 @@ export const leadsData: Lead[] = [
     updated_at: '2025-04-03 18:59:10.402863',
     notes: 'Found us on LinkedIn. Requested more information.',
     industry: 'Design',
-    company_size: 'Small'
+    company_size: 'Small',
+    lead_score: 45
   },
   {
     id: '171398e0-93b8-4ce0-8d82-d96a16b1fc05',
@@ -110,7 +116,8 @@ export const leadsData: Lead[] = [
     updated_at: '2025-04-03 18:59:10.402863',
     notes: 'Proposal sent. Waiting for feedback.',
     industry: 'Healthcare',
-    company_size: 'Medium'
+    company_size: 'Medium',
+    lead_score: 78
   }
 ];
 
@@ -164,3 +171,52 @@ export const getNewLeadsOverTime = () => {
     { month: 'Jun', leads: 28 }
   ];
 };
+
+// New functions for the user profile dashboard
+export const getAverageLeadScore = () => {
+  const scores = leadsData.map(lead => lead.lead_score || 0);
+  const total = scores.reduce((sum, score) => sum + score, 0);
+  return (total / scores.length).toFixed(0);
+};
+
+export const getLeadScoreDistribution = () => {
+  const ranges = [
+    { name: '0-20', min: 0, max: 20 },
+    { name: '21-40', min: 21, max: 40 },
+    { name: '41-60', min: 41, max: 60 },
+    { name: '61-80', min: 61, max: 80 },
+    { name: '81-100', min: 81, max: 100 }
+  ];
+  
+  return ranges.map(range => ({
+    name: range.name,
+    value: leadsData.filter(lead => {
+      const score = lead.lead_score || 0;
+      return score >= range.min && score <= range.max;
+    }).length
+  }));
+};
+
+export const getLeadScoreByIndustry = () => {
+  const industries = [...new Set(leadsData.map(lead => lead.industry))].filter(Boolean) as string[];
+  
+  return industries.map(industry => {
+    const industryLeads = leadsData.filter(lead => lead.industry === industry);
+    const scores = industryLeads.map(lead => lead.lead_score || 0);
+    const averageScore = scores.reduce((sum, score) => sum + score, 0) / scores.length;
+    
+    return {
+      name: industry,
+      score: Math.round(averageScore)
+    };
+  });
+};
+
+// Inventory management mock data
+export const getInventoryData = () => [
+  { id: 1, name: 'Product A', stock: 150, category: 'Hardware', status: 'In Stock' },
+  { id: 2, name: 'Product B', stock: 75, category: 'Software', status: 'Low Stock' },
+  { id: 3, name: 'Product C', stock: 0, category: 'Hardware', status: 'Out of Stock' },
+  { id: 4, name: 'Product D', stock: 200, category: 'Services', status: 'In Stock' },
+  { id: 5, name: 'Product E', stock: 42, category: 'Software', status: 'Low Stock' }
+];

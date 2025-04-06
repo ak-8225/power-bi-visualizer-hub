@@ -1,6 +1,8 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { cva } from "class-variance-authority";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Info } from "lucide-react";
 
 interface MetricsCardProps {
   title: string;
@@ -11,6 +13,7 @@ interface MetricsCardProps {
     isPositive: boolean;
   };
   variant?: 'default' | 'success' | 'danger' | 'warning';
+  description?: string;
 }
 
 const cardVariants = cva("", {
@@ -27,13 +30,27 @@ const cardVariants = cva("", {
   }
 });
 
-const MetricsCard = ({ title, value, icon, trend, variant = "default" }: MetricsCardProps) => {
+const MetricsCard = ({ title, value, icon, trend, variant = "default", description }: MetricsCardProps) => {
   return (
     <Card className={cardVariants({ variant })}>
       <CardContent className="p-6">
         <div className="flex justify-between items-start">
           <div>
-            <p className="text-sm font-medium text-muted-foreground">{title}</p>
+            <div className="flex items-center gap-1.5">
+              <p className="text-sm font-medium text-muted-foreground">{title}</p>
+              {description && (
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Info className="h-3.5 w-3.5 text-muted-foreground cursor-help" />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p className="text-xs max-w-[200px]">{description}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              )}
+            </div>
             <h3 className="text-4xl font-bold mt-2">{value}</h3>
             {trend && (
               <p className={`text-xs mt-2 flex items-center ${trend.isPositive ? 'text-powerbi-green' : 'text-powerbi-red'}`}>
